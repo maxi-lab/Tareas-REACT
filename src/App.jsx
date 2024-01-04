@@ -14,8 +14,11 @@ export  function App() {
         description:taskDescription
       }]);
     }
+  function deleteTask(id){
+    setTasks(tasks.filter(task=>task.id!==id));
+  }
   return (<>
         <TaskForm createTask={createTask}/>
-        <TaskList tasks={tasks}/>
+        <TaskList tasks={tasks} eliminar={deleteTask}/>
       </>);
 }
