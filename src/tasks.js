@@ -1,4 +1,4 @@
-//simula una BBDD 
+//simula una API que busca datos en el backend
 export const tareas=[
     {
         id:1,
