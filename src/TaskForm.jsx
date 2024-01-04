@@ -4,12 +4,9 @@ export function TaskForm({createTask}){
   const [title,setTitle]=useState("");
   const handeleSubmit=(e)=>{
     e.preventDefault();
-    const newTask={
-        id:3,
-        titulo:title, //cuidado con los nombres salame
-        description:'bob',
-    }
-    createTask(newTask);
+    
+    
+    createTask(title);
 
   }
   

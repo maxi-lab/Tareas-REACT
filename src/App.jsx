@@ -7,8 +7,12 @@ export  function App() {
   useEffect(()=>{
         setTasks(tareas)
     }, []);//no me pasa, pero si llego tener un conflicto de componentes con la instruccion 'as' puedo darle un alias al mismo, ejempo: import { tasks as data } from "./tasks";
-  function createTask(task) {
-      setTasks([...tasks,task]);
+  function createTask(taskTitle) {
+      setTasks([...tasks,{
+        id:tasks.length,
+        titulo:taskTitle,
+        description:'messi'
+      }]);
     }
   return (<>
         <TaskForm createTask={createTask}/>
