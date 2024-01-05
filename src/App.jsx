@@ -2,6 +2,7 @@ import { TaskList } from './TaskList'
 import { TaskForm } from './TaskForm';
 import { tareas } from "./tasks";
 import { useState, useEffect } from 'react';
+import { TaskContextProvaider } from './Context/TaskContext';
 export  function App() {
   const [tasks,setTasks]=useState([]);
   useEffect(()=>{
@@ -18,7 +19,7 @@ export  function App() {
     setTasks(tasks.filter(task=>task.id!==id));
   }
   return (<>
-        <TaskForm createTask={createTask}/>
-        <TaskList tasks={tasks} eliminar={deleteTask}/>
+            <TaskForm createTask={createTask}/>
+            <TaskList tasks={tasks} eliminar={deleteTask}/>
       </>);
 }
