@@ -9,14 +9,14 @@ export function TaskContextProvaider(props){
         description:taskDescription
       }]);
     }
-  function deleteTask(id){
+  function eliminar(id){
     setTasks(tasks.filter(task=>task.id!==id));
   }
     return (<>
         
         <TaskContext.Provider value={{
             tasks:tasks,
-            deleteTask:deleteTask,
+            eliminar:eliminar,
             createTask:createTask,
         }}>
         {props.children}
