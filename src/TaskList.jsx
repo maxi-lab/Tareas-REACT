@@ -2,7 +2,6 @@ import { DeleteTask } from "./DeleteTask";
 import { TaskContext } from "./Context/TaskContext";
 import { useContext } from "react";
 import { Fade } from "react-awesome-reveal";
-import { EditTask } from "./EditTask";
 export function TaskList(){
     const {tasks}=useContext(TaskContext);
 
