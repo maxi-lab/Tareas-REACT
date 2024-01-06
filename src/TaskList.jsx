@@ -2,12 +2,12 @@ import { DeleteTask } from "./DeleteTask";
 import { TaskContext } from "./Context/TaskContext";
 import { useContext } from "react";
 import { Fade } from "react-awesome-reveal";
-
+import { EditTask } from "./EditTask";
 export function TaskList(){
     const {tasks}=useContext(TaskContext);
 
     if (tasks.length===0) {
-        return (<><div className="text-white font-bold text-center "><Fade cascade duration={500} >No hay tareas aun</Fade></div></>);
+        return (<><Fade><div className="text-white font-bold text-center "><Fade cascade duration={100} >No hay tareas aun</Fade></div></Fade></>);
     }
     return(
         <>
