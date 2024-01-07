@@ -3,10 +3,8 @@ import { TaskContext } from "./Context/TaskContext";
 import { Fade } from "react-awesome-reveal";
 export function TaskForm(){
   
-  const [title,setTitle]=useState("");
-  const [description,setDescription]=useState("");
   const [valid,setValid]=useState(true);
-  const { createTask }=useContext(TaskContext);
+  const { createTask,title,setTitle,description,setDescription }=useContext(TaskContext);
   const handeleSubmit=(e)=>{
     e.preventDefault();
     if (title!==""&&description!==""){
