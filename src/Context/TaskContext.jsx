@@ -9,6 +9,7 @@ export function TaskContextProvaider(props){
     
     useEffect(()=>{
       setTasks(tareas);
+      setIdT(tareas[tareas.length -1].id+1);//no tiene sentido ya que sin el '+1' se carga en '2' pero setIdT(idT+1)tendria que ser 3
     },[]) //Simula una conexion de un sistema externo 
   function createTask(taskTitle, taskDescription) {
       setIdT(idT+1);

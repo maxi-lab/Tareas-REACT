@@ -21,7 +21,7 @@ export function TaskForm(){
   
   return (<>
             <div className="max-w-md mx-auto ">
-            <Fade cascade delay={500}><form onSubmit={handeleSubmit} className="bg-slate-800 p-10 mb-4 rounded-lg">
+            <Fade cascade delay={500} triggerOnce><form onSubmit={handeleSubmit} className="bg-slate-800 p-10 mb-4 rounded-lg">
                 <h1 className="text-2xl font-bold text-white mb-3">Crea una tarea</h1>
                 <input placeholder="Escribe tu tarea" className="bg-slate-300 p-3 w-full mb-2 rounded-md" value={title} onChange={(e)=>setTitle(e.target.value)}/>
                 <textarea placeholder="Escribe la descripcion" className="bg-slate-300 p-3 w-full mb-2 rounded-md" value={description} onChange={(e)=>setDescription(e.target.value)}/>
