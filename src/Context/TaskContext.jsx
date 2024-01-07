@@ -1,16 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 export const TaskContext=createContext();
 export function TaskContextProvaider(props){
     const [tasks,setTasks]=useState([]);
     const [idT,setIdT]=useState(0);
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
-    function createTask(taskTitle, taskDescription) {
+    
+  function createTask(taskTitle, taskDescription) {
       setIdT(idT+1);
       setTasks([...tasks,{
         id:idT,
         titulo:taskTitle,
-        description:taskDescription
+        description:taskDescription,
+        completa:false,
       }]);
     }
   function eliminar(id){
@@ -21,7 +23,10 @@ export function TaskContextProvaider(props){
       eliminar(id)
       setTitle(task.titulo);
       setDescription(task.description);
-      
+  }
+  function completar(id){
+    const task=tasks.find(t=>t.id===id);
+    task.completa=true;
   }
     return (<>
         
@@ -34,6 +39,7 @@ export function TaskContextProvaider(props){
             setTitle:setTitle,
             setDescription:setDescription,
             modificar:modificar,
+            completar:completar,
 
             
         }}>

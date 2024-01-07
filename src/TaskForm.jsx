@@ -4,14 +4,15 @@ import { Fade } from "react-awesome-reveal";
 export function TaskForm(){
   
   const [valid,setValid]=useState(true);
-  const { createTask,title,setTitle,description,setDescription }=useContext(TaskContext);
+  const { createTask,title,setTitle,description,setDescription,edit,setEdit }=useContext(TaskContext);
   const handeleSubmit=(e)=>{
     e.preventDefault();
     if (title!==""&&description!==""){
       createTask(title,description);
       setTitle("");
       setDescription("");
-      !valid?setValid(true):'';
+      setValid(true);
+      
     }else{
       setValid(false);
     }
