@@ -3,11 +3,13 @@ export const tareas=[
     {
         id:1,
         titulo:"tarea",
-        description:"Mi primer tarea"
+        description:"Mi primer tarea",
+        completa:false,
     },
     {
         id:2,
         titulo:"messi",
-        description:"Mi primer messi"
+        description:"Mi primer messi",
+        completa:true,
     },
 ];

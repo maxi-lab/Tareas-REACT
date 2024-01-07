@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { tareas } from "../tasks";
 export const TaskContext=createContext();
 export function TaskContextProvaider(props){
     const [tasks,setTasks]=useState([]);
@@ -6,6 +7,9 @@ export function TaskContextProvaider(props){
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
     
+    useEffect(()=>{
+      setTasks(tareas);
+    },[]) //Simula una conexion de un sistema externo 
   function createTask(taskTitle, taskDescription) {
       setIdT(idT+1);
       setTasks([...tasks,{
