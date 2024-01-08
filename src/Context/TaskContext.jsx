@@ -8,17 +8,17 @@ export function TaskContextProvaider(props){
     const [description,setDescription]=useState("");
     
     useEffect(()=>{
-      setTasks(tareas);
-      setIdT(tareas[tareas.length -1].id+1);//no tiene sentido ya que sin el '+1' se carga en '2' pero setIdT(idT+1)tendria que ser 3
+      setTasks(()=>tareas);
+      setIdT(()=>tareas[tareas.length -1].id+1);
     },[]) //Simula una conexion de un sistema externo 
   function createTask(taskTitle, taskDescription) {
-      setIdT(idT+1);
       setTasks([...tasks,{
         id:idT,
         titulo:taskTitle,
         description:taskDescription,
         completa:false,
       }]);
+      setIdT(prevIdT=>prevIdT+1);// esto es para que no se sobreescriva en una misma ejecucion (es mejor de lo que hacia antes, que eso se puede hacer, pero los docs lo recomiendan asi)
     }
   function eliminar(id){
     setTasks(tasks.filter(task=>task.id!==id));
