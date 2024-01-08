@@ -15,7 +15,7 @@ export function TaskContextProvaider(props){
       setTasks([...tasks,{
         id:idT,
         titulo:taskTitle,
-        descripion:taskDescription,
+        description:taskDescription,
         completa:false,
       }]);
       setIdT(prevIdT=>prevIdT+1);// esto es para que no se sobreescriva en una misma ejecucion (es mejor de lo que hacia antes, que eso se puede hacer, pero los docs lo recomiendan asi)
