@@ -15,7 +15,7 @@ export function TaskContextProvaider(props){
       setTasks([...tasks,{
         id:idT,
         titulo:taskTitle,
-        description:taskDescription,
+        descripion:taskDescription,
         completa:false,
       }]);
       setIdT(prevIdT=>prevIdT+1);// esto es para que no se sobreescriva en una misma ejecucion (es mejor de lo que hacia antes, que eso se puede hacer, pero los docs lo recomiendan asi)
@@ -24,10 +24,18 @@ export function TaskContextProvaider(props){
     setTasks(()=>tasks.filter(task=>task.id!==id));
   }
   function modificar(id) {
-      const task=tasks.find(t=>t.id===id);
-      eliminar(id)
-      setTitle(task.titulo);
-      setDescription(task.description);
+      setTasks((prevTasks)=>{return prevTasks.map(t=>{
+        if(t.id===id&&(title!==''||description!=='')){
+          if (title===''){
+            return {...t,description:description};
+          }
+          if (description===''){
+            return {...t,titulo:title};
+          }
+          return {...t,titulo:title,description:description};
+        }
+        return t;
+      })})
   }
   function completar(id){
     setTasks((prevTasks)=>{return prevTasks.map(t=>{
