@@ -10,7 +10,7 @@ export function TaskContextProvaider(props){
     useEffect(()=>{
       setTasks(()=>tareas);
       setIdT(()=>tareas[tareas.length -1].id+1);
-    },[]) //Simula una conexion de un sistema externo 
+    },[]) //Simula una conexion de un sistema externo (los docs recomiendan que sean así) 
   function createTask(taskTitle, taskDescription) {
       setTasks([...tasks,{
         id:idT,
@@ -21,7 +21,7 @@ export function TaskContextProvaider(props){
       setIdT(prevIdT=>prevIdT+1);// esto es para que no se sobreescriva en una misma ejecucion (es mejor de lo que hacia antes, que eso se puede hacer, pero los docs lo recomiendan asi)
     }
   function eliminar(id){
-    setTasks(tasks.filter(task=>task.id!==id));
+    setTasks(()=>tasks.filter(task=>task.id!==id));
   }
   function modificar(id) {
       const task=tasks.find(t=>t.id===id);
@@ -30,8 +30,13 @@ export function TaskContextProvaider(props){
       setDescription(task.description);
   }
   function completar(id){
-    const task=tasks.find(t=>t.id===id);
-    task.completa=true;
+    setTasks((prevTasks)=>{return prevTasks.map(t=>{
+      if(t.id===id){
+        return {...t,completa:!t.completa};
+      }
+      return t;
+    })})
+    
   }
     return (<>
         

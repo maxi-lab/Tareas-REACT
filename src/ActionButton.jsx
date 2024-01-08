@@ -1,6 +1,6 @@
 
 export function ActionButton({task,action,color='black',text='Un texto'}){
     return (
-        <div className="p-2"><button className={color} onClick={()=>action(task.id)}>{text}</button></div>
+        <div className="p-2"><button className={`bg-${color}-600 hover:bg-${color}-400 rounded-lg mb-4 p-2`} onClick={()=>action(task.id)}>{text}</button></div>
     )
 }
