@@ -37,7 +37,7 @@ export function TaskContextProvaider(props){
         return t;
       })})
       setDescription('');
-      setTitle('');
+      setTitle(''); 
   }
   function completar(id){
     setTasks((prevTasks)=>{return prevTasks.map(t=>{
