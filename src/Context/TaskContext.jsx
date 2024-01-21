@@ -1,6 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { tareas } from "../tasks";
-import { data } from "autoprefixer";
 export const TaskContext=createContext();
 export function TaskContextProvaider(props){
     const [tasks,setTasks]=useState([]);
@@ -15,12 +13,10 @@ export function TaskContextProvaider(props){
       },[]) //La conexion a la API
   function createTask(taskTitle, taskDescription) {
       const data={
-
         titulo:taskTitle,
         description:taskDescription,
         completada:false,
       };
-      console.log(data);
       try {
         fetch("http://127.0.0.1:8000/api/tarea/",{
           method:'POST',

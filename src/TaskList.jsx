@@ -11,7 +11,7 @@ export function TaskList(){
     }
     return(
         <>
-            <div className="grid grid-cols-3 gap-2 p-4 ">
+            <div className="grid mg:grid-cols lg:grid-cols-3 gap-2 p-4 ">
             {tasks.map((task)=><Fade direction="up" triggerOnce  key={task.id} ><div  className="bg-gray-800 text-white rounded-lg"><h1 className="text-xl font-bold p-2">Tarea: {task.completada?task.titulo+' (completa)':task.titulo}</h1>
             <h2 className="p-2">Descripcion: {task.description}</h2>
             <ActionButton text='Eliminar' task={task} action={eliminar} color='bg-red-600 hover:bg-red-400 rounded-lg mb-4 p-2'></ActionButton>
