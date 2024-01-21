@@ -1,51 +1,127 @@
 import { createContext, useState, useEffect } from "react";
 import { tareas } from "../tasks";
+import { data } from "autoprefixer";
 export const TaskContext=createContext();
 export function TaskContextProvaider(props){
     const [tasks,setTasks]=useState([]);
-    const [idT,setIdT]=useState(0);
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
     
     useEffect(()=>{
-      setTasks(()=>tareas);
-      setIdT(()=>tareas[tareas.length -1].id+1);
-    },[]) //Simula una conexion de un sistema externo (los docs recomiendan que sean así) 
+      fetch('http://127.0.0.1:8000/api/tarea/')
+        .then((response)=>response.json())
+        .then((data)=>setTasks(data));
+        
+      },[]) //La conexion a la API
   function createTask(taskTitle, taskDescription) {
-      setTasks([...tasks,{
-        id:idT,
+      const data={
+
         titulo:taskTitle,
         description:taskDescription,
-        completa:false,
-      }]);
-      setIdT(prevIdT=>prevIdT+1);// esto es para que no se sobreescriva en una misma ejecucion (es mejor de lo que hacia antes, que eso se puede hacer, pero los docs lo recomiendan asi)
+        completada:false,
+      };
+      console.log(data);
+      try {
+        fetch("http://127.0.0.1:8000/api/tarea/",{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+          },
+          body:JSON.stringify(data),
+        })
+        .then((response)=>response.json())
+        .then((data)=>{
+          setTasks([...tasks,data]);
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   function eliminar(id){
-    setTasks(()=>tasks.filter(task=>task.id!==id));
+    try {
+      fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+        method:'DELETE',
+      })
+      .then((response)=>response.ok?setTasks(()=>tasks.filter(task=>task.id!==id)):console.error('error: ',response.statusText));
+    } catch (error) {
+      console.error(error);
+    }
   }
   function modificar(id) {
-      setTasks((prevTasks)=>{return prevTasks.map(t=>{
-        if(t.id===id&&(title!==''||description!=='')){
-          if (title===''){
-            return {...t,description:description};
+      
+      function data(){
+        for (let i = 0; i < tasks.length; i++) {
+          if(tasks[i].id===id&&(title!==''||description!=='')){
+            if (title===''){
+              return {...tasks[i],description:description};
+            }
+            if (description===''){
+              return {...tasks[i],titulo:title};
+            }
+            return {...tasks[i],titulo:title,description:description};
           }
-          if (description===''){
-            return {...t,titulo:title};
-          }
-          return {...t,titulo:title,description:description};
         }
-        return t;
-      })})
+      }
+      try {
+        fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+          method:'PATCH',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(data())
+        })
+        .then((response)=>response.json())
+        .then(()=>{
+          setTasks((prevTasks)=>{return prevTasks.map(t=>{
+            if(t.id===id&&(title!==''||description!=='')){
+              if (title===''){
+                return {...t,description:description};
+              }
+              if (description===''){
+                return {...t,titulo:title};
+              }
+              return {...t,titulo:title,description:description};
+            }
+            return t;
+          })})
+        })
+        .catch((error)=>console.error(error))
+      } catch (error) {
+        console.error(error);
+      }
       setDescription('');
       setTitle(''); 
   }
   function completar(id){
-    setTasks((prevTasks)=>{return prevTasks.map(t=>{
-      if(t.id===id){
-        return {...t,completa:!t.completa};
+    
+    function data() {
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id===id) {
+          return {... tasks[i],completada:!tasks[i].completada}
+        }
       }
-      return t;
-    })})
+    }
+    console.log(data());
+    try {
+      fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+        method:'PATCH',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(data()),
+      })
+      .then((response)=>response.json())
+      .then(()=>{
+        setTasks((prevTasks)=>{return prevTasks.map(t=>{
+          if(t.id===id){
+            return {...t,completada:!t.completada};
+          }
+          return t;
+        })})
+      })
+    } catch (error) {
+      console.error(error);
+    }
     
   }
     return (<>
@@ -60,8 +136,6 @@ export function TaskContextProvaider(props){
             setDescription:setDescription,
             modificar:modificar,
             completar:completar,
-
-            
         }}>
         {props.children}
         </TaskContext.Provider>
