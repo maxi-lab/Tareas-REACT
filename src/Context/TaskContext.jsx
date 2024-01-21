@@ -6,7 +6,7 @@ export function TaskContextProvaider(props){
     const [description,setDescription]=useState("");
     
     useEffect(()=>{
-      fetch('http://127.0.0.1:8000/api/tarea/')
+      fetch('https://api-tareas-j609.onrender.com/api/tarea/')
         .then((response)=>response.json())
         .then((data)=>setTasks(data));
         
@@ -18,7 +18,7 @@ export function TaskContextProvaider(props){
         completada:false,
       };
       try {
-        fetch("http://127.0.0.1:8000/api/tarea/",{
+        fetch("https://api-tareas-j609.onrender.com/api/tarea/",{
           method:'POST',
           headers:{
             'Content-Type':'application/json',
@@ -35,7 +35,7 @@ export function TaskContextProvaider(props){
     }
   function eliminar(id){
     try {
-      fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+      fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
         method:'DELETE',
       })
       .then((response)=>response.ok?setTasks(()=>tasks.filter(task=>task.id!==id)):console.error('error: ',response.statusText));
@@ -59,7 +59,7 @@ export function TaskContextProvaider(props){
         }
       }
       try {
-        fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+        fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
           method:'PATCH',
           headers:{
             'Content-Type':'application/json'
@@ -99,7 +99,7 @@ export function TaskContextProvaider(props){
     }
     console.log(data());
     try {
-      fetch(`http://127.0.0.1:8000/api/tarea/${id}/`,{
+      fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
         method:'PATCH',
         headers:{
           'Content-Type': 'application/json',
