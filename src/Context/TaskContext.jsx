@@ -97,7 +97,7 @@ export function TaskContextProvaider(props){
         }
       }
     }
-    console.log(data());
+    
     try {
       fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
         method:'PATCH',
