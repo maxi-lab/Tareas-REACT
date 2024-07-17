@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { tareas } from "../tasks";
 export const TaskContext=createContext();
 export function TaskContextProvaider(props){
     const [tasks,setTasks]=useState([]);
@@ -6,10 +7,7 @@ export function TaskContextProvaider(props){
     const [description,setDescription]=useState("");
     
     useEffect(()=>{
-      fetch('https://api-tareas-j609.onrender.com/api/tarea/')
-        .then((response)=>response.json())
-        .then((data)=>setTasks(data));
-        
+      setTasks(tareas)
       },[]) //La conexion a la API
   function createTask(taskTitle, taskDescription) {
       const data={
@@ -17,31 +15,10 @@ export function TaskContextProvaider(props){
         description:taskDescription,
         completada:false,
       };
-      try {
-        fetch("https://api-tareas-j609.onrender.com/api/tarea/",{
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json',
-          },
-          body:JSON.stringify(data),
-        })
-        .then((response)=>response.json())
-        .then((data)=>{
-          setTasks([...tasks,data]);
-        });
-      } catch (error) {
-        console.error(error);
-      }
+        setTasks([...tasks,data]);
     }
   function eliminar(id){
-    try {
-      fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
-        method:'DELETE',
-      })
-      .then((response)=>response.ok?setTasks(()=>tasks.filter(task=>task.id!==id)):console.error('error: ',response.statusText));
-    } catch (error) {
-      console.error(error);
-    }
+    setTasks(()=>tasks.filter(task=>task.id!==id))
   }
   function modificar(id) {
       
@@ -58,33 +35,18 @@ export function TaskContextProvaider(props){
           }
         }
       }
-      try {
-        fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
-          method:'PATCH',
-          headers:{
-            'Content-Type':'application/json'
-          },
-          body:JSON.stringify(data())
-        })
-        .then((response)=>response.json())
-        .then(()=>{
-          setTasks((prevTasks)=>{return prevTasks.map(t=>{
-            if(t.id===id&&(title!==''||description!=='')){
-              if (title===''){
-                return {...t,description:description};
-              }
-              if (description===''){
-                return {...t,titulo:title};
-              }
-              return {...t,titulo:title,description:description};
-            }
-            return t;
-          })})
-        })
-        .catch((error)=>console.error(error))
-      } catch (error) {
-        console.error(error);
-      }
+      setTasks((prevTasks)=>{return prevTasks.map(t=>{
+        if(t.id===id&&(title!==''||description!=='')){
+          if (title===''){
+            return {...t,description:description};
+          }
+          if (description===''){
+            return {...t,titulo:title};
+          }
+          return {...t,titulo:title,description:description};
+        }
+        return t;
+      })})
       setDescription('');
       setTitle(''); 
   }
@@ -97,27 +59,12 @@ export function TaskContextProvaider(props){
         }
       }
     }
-    
-    try {
-      fetch(`https://api-tareas-j609.onrender.com/api/tarea/${id}/`,{
-        method:'PATCH',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(data()),
-      })
-      .then((response)=>response.json())
-      .then(()=>{
-        setTasks((prevTasks)=>{return prevTasks.map(t=>{
-          if(t.id===id){
-            return {...t,completada:!t.completada};
-          }
-          return t;
-        })})
-      })
-    } catch (error) {
-      console.error(error);
-    }
+    setTasks((prevTasks)=>{return prevTasks.map(t=>{
+      if(t.id===id){
+        return {...t,completada:!t.completada};
+      }
+      return t;
+    })})
     
   }
     return (<>
